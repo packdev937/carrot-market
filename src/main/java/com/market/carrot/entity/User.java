@@ -26,4 +26,12 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Item> items;
+
+    public User(String email, String password, String name, String phone, String nickname) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.phone = phone;
+        this.nickname = nickname;
+    }
 }
