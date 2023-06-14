@@ -1,12 +1,16 @@
-package com.market.carrot.repository;
+package com.hanghaeclone.dangoon.repository;
 
-import com.market.carrot.entity.User;
+import com.hanghaeclone.dangoon.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+
 public interface UserRepository extends JpaRepository<User, Long> {
-    public Optional<User> findUserByEmail(String email);
+    Optional<User> findByUsername(String username);
+    Optional<User> findByKakaoId(Long id);
+    Optional<User> findByNickName(String nickName);
+
+//    Optional<User> findByEmail(String email);
 }
