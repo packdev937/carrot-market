@@ -1,8 +1,11 @@
 package com.market.carrot.service;
 
+import com.market.carrot.jwt.JwtUtil;
+import com.market.carrot.dto.LoginRequestDto;
 import com.market.carrot.dto.SignupRequestDto;
 import com.market.carrot.entity.User;
 import com.market.carrot.repository.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +20,8 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
+
+    private final JwtUtil jwtUtil;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -50,5 +55,21 @@ public class UserService {
         User newUser = new User(username, password, nickname);
         userRepository.save(newUser);
         return "회원가입완료";
+    }
+
+    public String login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        String username = loginRequestDto.getUsername();
+        String password = loginRequestDto.getPassword();
+
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new IllegalArgumentException("등록된 사용자가 없습니다")
+        );
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("비밀 번호가 옳지 않습니다.");
+        }
+
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getNickname()));
+        return "로그인 성공";
     }
 }

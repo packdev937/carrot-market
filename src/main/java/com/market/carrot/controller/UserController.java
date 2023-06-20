@@ -1,14 +1,13 @@
 package com.market.carrot.controller;
 
+import com.market.carrot.dto.LoginRequestDto;
 import com.market.carrot.dto.ResponseDto;
 import com.market.carrot.dto.SignupRequestDto;
 import com.market.carrot.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,5 +18,10 @@ public class UserController {
     @GetMapping("/users/signin")
     public ResponseDto<String> signin(@RequestBody @Valid SignupRequestDto signupRequestDto) {
         return ResponseDto.success(userService.signup(signupRequestDto));
+    }
+
+    @PostMapping("/users/login")
+    public ResponseDto<String> login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        return ResponseDto.success(userService.login(loginRequestDto, response));
     }
 }

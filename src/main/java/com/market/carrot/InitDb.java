@@ -13,6 +13,6 @@ public class InitDb {
 
     @PostConstruct
     public void init() {
-        userRepository.save(new User("test@test.com", "test!", "tester", "010-1234-5678", "tester"));
+        userRepository.save(new User("tester", "test1234", "tester"));
     }
 }
