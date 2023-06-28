@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 가입</title>
+</head>
+<body>
+<form action="/users/signup" role="form" method="post" th:object="${signupRequestDto}">
+    <h2>회원 가입</h2>
+    <div class="textForm">
+        <label th:for="email">이메일(ID)</label><br>
+        <div class="inputBox">
+            <input th:field="*{email}" type="text" class="input">
+        </div>
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect data</p>
+    </div>
+    <div class="textForm">
+        <label th:for="password">비밀번호(PW)</label><br>
+        <div class="inputBox">
+            <input th:field="*{password}" type="password" class="input">
+        </div>
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
+    </div>
+    <div class="textForm">
+        <label th:for="name">이름</label><br>
+        <div class="inputBox">
+            <input th:field="*{name}" type="text" class="input">
+        </div>
+        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
+    </div>
+    <div class="textForm">
+        <label th:for="phone">핸드폰번호</label><br>
+        <div class="inputBox">
+            <input type="text" th:field="*{phone}" class="input">
+        </div>
+        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="fieldError">Incorrect data</p>
+    </div>
+    <div class="textForm">
+        <label th:for="nick">닉네임</label><br>
+        <div class="inputBox">
+            <input th:field="*{nickname}" type="text" class="input">
+        </div>
+        <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" class="fieldError">Incorrect data</p>
+    </div>
+    <br>
+    <input type="submit" class="btn" value="가입하기"/>
+</form>
+</body>
+</html>
