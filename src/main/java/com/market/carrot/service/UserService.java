@@ -1,5 +1,6 @@
 package com.market.carrot.service;
 
+import com.market.carrot.dto.LoginRequestDto;
 import com.market.carrot.dto.SignupRequestDto;
 import com.market.carrot.entity.User;
 import com.market.carrot.repository.UserRepository;
@@ -56,6 +57,26 @@ public class UserService {
                 .build();
 
         return userRepository.save(newUser);
+    }
+
+    public User login(@Valid LoginRequestDto loginRequestDto) {
+        String email = loginRequestDto.getEmail();
+        String password = loginRequestDto.getPassword();
+
+//        Optional<User> findUser = userRepository.findByEmail(email);
+//        if (findUser.isEmpty()) {
+//            throw new IllegalArgumentException("일치하는 회원 정보가 없습니다.");
+//        }
+
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
+        );
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        return user;
     }
 }
 

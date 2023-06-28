@@ -10,24 +10,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    Long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
-    String email;
+    private String email;
 
     @Column(nullable = false)
-    String password;
+    private String password;
 
     @Column(nullable = false, unique = true)
-    String nickname;
+    private String nickname;
 
     @Column(nullable = false, unique = true)
-    String phone;
+    private String phone;
 
     @Column(nullable = false)
-    String name;
+    private String name;
 
-    @Builder // 생성자에 Builder를 붙임으로써 AllArgsConstructor와의 동시 사용을 막음
+    @Builder // 생성자에 Builder를 붙임으로써 AllArgsConstructor와 동시 사용을 막음
     public User(String email, String password, String nickname, String phone, String name) {
         this.email = email;
         this.password = password;
